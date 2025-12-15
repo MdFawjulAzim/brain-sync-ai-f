@@ -1,7 +1,7 @@
-import { baseApi } from "../../api/baseApi";
-import { setUser } from "./authSlice";
+import { api } from "./api";
+import { setUser } from "../features/auth/authSlice";
 
-export const authApi = baseApi.injectEndpoints({
+export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation({
       query: (credentials) => ({
