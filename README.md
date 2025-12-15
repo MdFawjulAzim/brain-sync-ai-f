@@ -1,16 +1,59 @@
-# React + Vite
+## 📅 Phase 2: Frontend Development (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 🎯 Goal
 
-Currently, two official plugins are available:
+Build a responsive, modern UI to interact with the Backend API, featuring real-time updates and AI integration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🛠️ Tech Stack & Setup
 
-## React Compiler
+- **Framework:** React (Vite)
+- **State Management:** Redux Toolkit & RTK Query (for efficient API caching)
+- **UI Library:** Ant Design (Components) + Tailwind CSS (Styling)
+- **Real-time:** Socket.io Client
+- **Forms:** React Hook Form
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🚀 Key Features Implemented
 
-## Expanding the ESLint configuration
+1.  **Authentication UI:**
+    - Login & Register pages with JWT handling.
+    - `jwt-decode` to extract user details from tokens.
+    - Protected Routes using `Maps` and Redux state.
+2.  **Dashboard & Note Management:**
+    - Display notes in a responsive grid layout.
+    - **Pagination:** Implemented server-side pagination (10 items per page).
+    - **Unified Modal:** Single modal for both creating and editing notes to reduce code duplication.
+3.  **Real-time Updates:**
+    - Integrated `socket.io-client` to listen for `new-note`, `update`, and `delete` events.
+    - Used `invalidateTags` in RTK Query to auto-refresh data without page reload.
+4.  **AI Integration UI:**
+    - Added a "Sparkles" button to trigger Google Gemini Summary.
+    - Displayed loading toasts for better UX.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🐛 Challenges & Fixes (Frontend)
+
+**1. Socket.io CORS Issue**
+
+- **Issue:** Browser blocked connection to `localhost:5000` due to CORS policy.
+- **Fix:** Updated Backend `server.ts` to allow origin `http://localhost:5173` and configured `transports: ["websocket"]` in the client.
+
+**2. Pagination Data Structure Mismatch**
+
+- **Issue:** Pagination wasn't showing because the UI expected `data.meta.total` but API returned `data.total`.
+- **Fix:** Updated `Dashboard.jsx` to access `data.total` directly.
+
+**3. React Router Lazy Loading Error**
+
+- **Issue:** Incorrect syntax `lazy(() => "path")` caused a crash.
+- **Fix:** Corrected to dynamic import: `lazy(() => import("path"))`.
+
+---
+
+## ✅ Project Status: COMPLETED
+
+**BrainSync AI** is now fully functional with:
+
+- [x] Secure Auth System
+- [x] CRUD Operations
+- [x] Database Pagination
+- [x] Google Gemini AI Integration
+- [x] Real-time Sync via Sockets
