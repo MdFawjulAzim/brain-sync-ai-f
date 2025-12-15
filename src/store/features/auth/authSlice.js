@@ -1,36 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
 
-// Load initial state from localStorage
 const loadAuthFromStorage = () => {
   try {
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
-    const fullName = localStorage.getItem("fullName");
-    const email = localStorage.getItem("email");
-    const roleId = localStorage.getItem("roleId");
-    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-
-    return {
-      token: token || null,
-      user: {
-        id: id || null,
-        fullName: fullName || null,
-        email: email || null,
-        roleId: roleId ? parseInt(roleId) : null,
-      },
-      isAuthenticated: isAuthenticated,
-    };
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      const decodedUser = jwtDecode(token);
+      return {
+        token: token,
+        user: decodedUser,
+        isAuthenticated: true,
+      };
+    }
   } catch (error) {
-    console.error("Error loading auth from localStorage:", error);
+    console.error("Invalid token found in storage", error);
+    localStorage.removeItem("accessToken");
   }
   return {
     token: null,
-    user: {
-      id: null,
-      fullName: null,
-      email: null,
-      roleId: null,
-    },
+    user: null,
     isAuthenticated: false,
   };
 };
@@ -41,48 +29,29 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      const { token, ...user } = action.payload;
-      state.token = token;
-      state.user = user;
-      state.isAuthenticated = Boolean(token);
-      // Persist to separate localStorage keys
-      localStorage.setItem("token", token || "");
-      localStorage.setItem("id", user.id || "");
-      localStorage.setItem("fullName", user.fullName || "");
-      localStorage.setItem("email", user.email || "");
-      localStorage.setItem("roleId", user.roleId?.toString() || "");
-      localStorage.setItem("isAuthenticated", state.isAuthenticated.toString());
+    setUser: (state, action) => {
+      const { accessToken } = action.payload;
+      state.token = accessToken;
+
+      if (accessToken) {
+        state.user = jwtDecode(accessToken);
+        state.isAuthenticated = true;
+        localStorage.setItem("accessToken", accessToken);
+      }
     },
     logout: (state) => {
       state.token = null;
-      state.user = {
-        id: null,
-        fullName: null,
-        email: null,
-        roleId: null,
-      };
+      state.user = null;
       state.isAuthenticated = false;
-      // Remove from separate localStorage keys
-      localStorage.removeItem("token");
-      localStorage.removeItem("id");
-      localStorage.removeItem("fullName");
-      localStorage.removeItem("email");
-      localStorage.removeItem("roleId");
-      localStorage.setItem("isAuthenticated", "false");
+      localStorage.removeItem("accessToken");
     },
   },
 });
 
-export const { setToken, logout } = authSlice.actions;
-
-// Selectors
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-export const selectToken = (state) => state.auth.token;
-export const selectUser = (state) => state.auth.user;
-export const selectUserId = (state) => state.auth.user?.id;
-export const selectUserEmail = (state) => state.auth.user?.email;
-export const selectUserFullName = (state) => state.auth.user?.fullName;
-export const selectUserRoleId = (state) => state.auth.user?.roleId;
+export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const selectToken = (state) => state.auth.token;
+export const selectUser = (state) => state.auth.user;
+export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
