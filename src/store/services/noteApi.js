@@ -44,6 +44,14 @@ export const noteApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Notes"],
     }),
+
+    chatWithNotes: build.mutation({
+      query: (body) => ({
+        url: "/notes/chat",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -53,4 +61,5 @@ export const {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
   useGenerateSummaryMutation,
+  useChatWithNotesMutation,
 } = noteApi;

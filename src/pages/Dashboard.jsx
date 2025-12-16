@@ -13,6 +13,7 @@ import { Plus, Loader2 } from "lucide-react";
 import NoteCard from "../components/NoteCard";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
+import AIChatButton from "../components/AIChatButton";
 
 const SOCKET_URL = import.meta.env.VITE_API_URL?.replace('/api/v1', '') || "http://localhost:5000";
 
@@ -168,7 +169,8 @@ const Dashboard = () => {
                     <Empty description="No notes found. Create your first one!" />
                 </div>
             )}
-
+            <AIChatButton />
+            
             <Modal
                 title={editingNote ? "Edit Note" : "Create New Note"}
                 open={isModalOpen}
