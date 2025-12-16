@@ -16,7 +16,7 @@ const MainLayout = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {/* Navbar */}
-            <nav className="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+            <nav className="bg-white px-6 py-4 flex justify-between items-center">
                 <h1 className="text-xl font-bold text-blue-600">BrainSync AI 🧠</h1>
                 <Button
                     type="text"

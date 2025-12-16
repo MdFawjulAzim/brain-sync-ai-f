@@ -3,7 +3,7 @@ import { Trash2, Edit, Sparkles } from "lucide-react";
 
 const NoteCard = ({ note, onDelete, onEdit, onSummarize }) => {
     return (
-        <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+        <div className="bg-white p-5 rounded-xl border border-gray-100 flex flex-col justify-between h-full">
             <div>
                 <div className="flex justify-between items-start mb-2">
                     <h3 className="text-lg font-bold text-gray-800 line-clamp-1">

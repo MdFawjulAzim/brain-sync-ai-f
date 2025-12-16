@@ -37,13 +37,18 @@ const Dashboard = () => {
         const socket = io(SOCKET_URL);
         socket.on("connect", () => console.log("🟢 Connected to Socket"));
 
-        const handleRealtimeUpdate = () => {
+        const handleRealtimeUpdate = (message) => {
             dispatch(noteApi.util.invalidateTags(["Notes"]));
+            toast.success(message);
         };
 
-        socket.on("new-note", handleRealtimeUpdate);
-        socket.on("note-updated", handleRealtimeUpdate);
-        socket.on("note-deleted", handleRealtimeUpdate);
+        // socket.on("new-note", handleRealtimeUpdate);
+        // socket.on("note-updated", handleRealtimeUpdate);
+        // socket.on("note-deleted", handleRealtimeUpdate);
+
+        socket.on("new-note", () => handleRealtimeUpdate("New note added by someone!"));
+        socket.on("note-updated", () => handleRealtimeUpdate("Note updated by someone!"));
+        socket.on("note-deleted", () => handleRealtimeUpdate("Note deleted by someone!"));
 
         return () => socket.disconnect();
     }, [dispatch]);
