@@ -21,7 +21,7 @@ const Register = () => {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-            <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-xl shadow-lg">
+            <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-xl">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900">
                         Create Account 🚀
@@ -79,7 +79,7 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <Loader2 className="animate-spin h-5 w-5" />
