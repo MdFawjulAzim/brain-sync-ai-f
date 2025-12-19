@@ -1,3 +1,5 @@
+# BrainSync AI - Frontend Development Log
+
 ## 📅 Phase 2: Frontend Development (React + Vite)
 
 ### 🎯 Goal
@@ -31,7 +33,8 @@ Build a responsive, modern UI to interact with the Backend API, featuring real-t
 3. **AI Integration (The "Second Brain"):**
 
    - **AI Summary:** Added a "Sparkles" button to trigger on-demand Google Gemini summaries.
-   - **RAG Chat Interface:** - Developed a **Floating Action Button (FAB)** for the AI Assistant.
+   - **RAG Chat Interface:**
+     - Developed a **Floating Action Button (FAB)** for the AI Assistant.
      - Built a **Glassmorphism Chat Modal** with maximize/minimize capabilities.
      - Implemented **Optimistic UI** for instant message display.
      - Integrated **Markdown Rendering** for formatted AI responses.
@@ -64,12 +67,71 @@ Build a responsive, modern UI to interact with the Backend API, featuring real-t
 
 ---
 
-## ✅ Project Status: COMPLETED
+## 📅 Date: December 20, 2025 (Phase 4: Frontend - Active Recall UI)
 
-**BrainSync AI** is now fully functional with:
+### 🎯 Goal
 
-- [x] Secure Auth System
-- [x] CRUD Operations
-- [x] Database Pagination
-- [x] Google Gemini AI (Summary + RAG Chat)
-- [x] Real-time Sync via Sockets
+Build the User Interface (UI) for the **Quiz & Active Recall System** using React and Ant Design, connecting it to the backend AI services.
+
+### 🏗️ Tasks & Progress
+
+- [x] **Redux API Slice (`quizApi.js`):**
+
+  - Created a new API slice using `injectEndpoints` to handle Quiz operations without cluttering the main store.
+  - Endpoints added: `generateQuiz`, `submitQuiz`, and `chatQuizMistake`.
+
+- [x] **Quiz Modal Component (`QuizModal.jsx`):**
+
+  - **Multi-View Interface:** Designed a single modal that transitions between 3 states:
+    1.  **Taking Quiz:** Displays questions one by one with Radio button options and navigation (Prev/Next).
+    2.  **Result View:** Shows a circular progress bar for the score and a detailed breakdown of correct vs. wrong answers.
+    3.  **AI Tutor Chat:** An embedded chat interface inside the result view to discuss mistakes with the AI.
+  - **UX Enhancements:** Added auto-scroll for chat, loading skeletons, and smooth transitions.
+  - **Markdown Support:** Integrated `react-markdown` to render formatted explanations from the AI Tutor.
+
+- [x] **Dashboard Integration:**
+  - Updated **`NoteCard.jsx`** to include a "Take Quiz" button (Brain Circuit Icon).
+  - Added loading states (`isGeneratingQuiz`) to prevent multiple clicks while AI generates the quiz.
+  - Integrated `react-hot-toast` for real-time feedback (e.g., "AI is crafting your quiz...").
+
+### 🐛 Challenges & Fixes
+
+**1. Modal State Persistence**
+
+- **Problem:** When reopening the quiz modal, previous answers or chat history were still visible.
+- **Fix:** Used a `useEffect` hook to reset `currentStep`, `answers`, `result`, and `chatHistory` states whenever the `isOpen` prop changes to `true`.
+
+**2. Chat Auto-Scrolling**
+
+- **Problem:** When the AI Tutor sent a long explanation, the chat window didn't scroll down automatically.
+- **Fix:** Implemented a `useRef` (called `chatEndRef`) and a `useEffect` to automatically `scrollIntoView` whenever the `chatHistory` array updates.
+
+**3. API Loading State UX**
+
+- **Problem:** Users didn't know if the quiz was being generated after clicking the button.
+- **Fix:** Added a local state `generatingNoteId` in Dashboard to show a specific loading spinner only on the card that was clicked, disabling the button temporarily.
+
+### 📸 Feature Spotlight: The "Active Recall" Loop
+
+1.  **Generate:** User clicks the "Brain" icon on a note -> AI reads the note -> Generates 5 MCQs.
+2.  **Test:** User takes the quiz in a distraction-free modal.
+3.  **Review:** Immediate feedback on Score and Mistakes.
+4.  **Learn:** User asks "Why is option B wrong?" -> AI Tutor explains the concept -> **Learning Reinforced!**
+
+---
+
+## ✅ Project Status: FEATURE COMPLETE
+
+**BrainSync AI** is now a fully functional "Second Brain" application.
+
+**Core Features Ready:**
+
+- [x] **Auth:** Secure Login/Register (JWT).
+- [x] **Notes:** CRUD + Tags + Real-time Sync (Socket.io).
+- [x] **RAG Chat:** Chat with Notes (Gemini).
+- [x] **Active Recall:** AI Quiz + Mistake Analysis (OpenAI/Gemini).
+
+### 🚀 Next Steps
+
+- **Deployment:** Prepare for production deployment (Vercel + VPS).
+- **Testing:** Manual testing of the full user flow.
